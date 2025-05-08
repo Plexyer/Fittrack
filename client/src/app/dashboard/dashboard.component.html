@@ -1,0 +1,59 @@
+<div class="dashboard">
+  <h1 class="page-title">Dashboard</h1>
+  
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-value">{{workoutStats.totalWorkouts}}</div>
+      <div class="stat-label">Total Workouts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{workoutStats.totalExercises}}</div>
+      <div class="stat-label">Total Exercises</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{workoutStats.totalSets}}</div>
+      <div class="stat-label">Total Sets</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{workoutStats.averageWorkoutsPerWeek}}</div>
+      <div class="stat-label">Avg. Workouts/Week</div>
+    </div>
+  </div>
+  
+  <div class="dashboard-section">
+    <div class="section-header">
+      <h2>Recent Workouts</h2>
+      <a [routerLink]="['/workouts']" class="view-all">View All</a>
+    </div>
+    <div class="workouts-container">
+      @if (isLoading) {
+        <div class="loading-placeholder">
+          <span class="material-icons spinning">sync</span>
+          <p>Loading workouts...</p>
+        </div>
+      } @else {
+        @if (recentWorkouts.length === 0) {
+          <div class="empty-state">
+            <span class="material-icons">fitness_center</span>
+            <p>No workouts yet. Start tracking your progress!</p>
+            <a [routerLink]="['/workouts']" class="add-workout-btn">Add Workout</a>
+          </div>
+        } @else {
+          @for (workout of recentWorkouts; track $index) {
+            <app-workout-card [workout]="workout"></app-workout-card>
+          }
+        }
+      }
+    </div>
+  </div>
+  
+  <div class="dashboard-section">
+    <div class="section-header">
+      <h2>Progress Overview</h2>
+      <span class="view-all">Analytics</span>
+    </div>
+    <div class="progress-chart-container">
+      <app-progress-chart></app-progress-chart>
+    </div>
+  </div>
+</div>

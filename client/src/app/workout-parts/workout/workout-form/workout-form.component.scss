@@ -1,0 +1,196 @@
+.workout-form-container {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  margin: 0 auto 30px;
+  max-width: 100%;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .workout-form-container {
+    padding: 28px;
+  }
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+.workout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 450px; 
+}
+
+.form-group label {
+  font-size: 15px;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input, 
+.form-group textarea {
+  padding: 12px 14px;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  transition: all 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+}
+
+.form-group input.is-invalid, 
+.form-group textarea.is-invalid {
+  border-color: #e57373;
+  box-shadow: 0 0 0 1px rgba(229, 115, 115, 0.25);
+}
+
+.form-group input::placeholder, 
+.form-group textarea::placeholder {
+  color: #888888;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-error {
+  margin-top: 8px;
+}
+
+.form-error p {
+  color: #e57373;
+  font-size: 13px;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 450px;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+}
+
+.form-actions button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+.form-actions .material-icons {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.form-actions .material-icons.spinning {
+  animation: spin 1s linear infinite;
+}
+
+.btn-secondary {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  color: #e0e0e0;
+}
+
+.btn-secondary:hover {
+  background-color: #333333;
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #3d9140;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background-color: #2d5e30;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+input[type="date"] {
+  -webkit-appearance: textfield;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}

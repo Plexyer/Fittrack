@@ -1,0 +1,70 @@
+@if (sets.length > 0) {
+  <div class="set-list">
+    <table class="sets-table">
+      <thead>
+      <tr>
+        <th>Set</th>
+        <th>Weight (kg)</th>
+        <th>Reps</th>
+        <th>Notes</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (set of sets; track set.id; let i = $index) {
+          <tr>
+            @if (editingSetId !== set.id) {
+              <td class="set-number">{{ i + 1 }}</td>
+              <td>{{ set.weight }}</td>
+              <td>{{ set.repetitions }}</td>
+              <td class="notes-cell">{{ set.notes || '-' }}</td>
+              <td class="actions-cell">
+                <button class="btn-icon" (click)="startEdit(set)">
+                  <i class="material-icons">edit</i>
+                </button>
+                <button class="btn-icon danger" (click)="deleteSet(set.id!)">
+                  <i class="material-icons">delete</i>
+                </button>
+              </td>
+            } @else {
+              <td class="set-number">{{ i + 1 }}</td>
+              <td>
+                <input
+                  type="number"
+                  [(ngModel)]="editingSet.weight"
+                  class="form-control-sm"
+                  min="0"
+                  step="0.5"
+                >
+              </td>
+              <td>
+                <input
+                  type="number"
+                  [(ngModel)]="editingSet.repetitions"
+                  class="form-control-sm"
+                  min="0"
+                  step="1"
+                >
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="editingSet.notes"
+                  class="form-control-sm"
+                >
+              </td>
+              <td class="actions-cell">
+                <button class="btn-icon success" (click)="saveSet()">
+                  <i class="material-icons">check</i>
+                </button>
+                <button class="btn-icon" (click)="cancelEdit()">
+                  <i class="material-icons">close</i>
+                </button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

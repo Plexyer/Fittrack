@@ -1,0 +1,18 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <style>
+    .text { font: bold 24px sans-serif; fill: #2E7D32; }
+    .track-line { stroke: #2E7D32; stroke-width: 3; fill: none; }
+    .circle { fill: #66BB6A; }
+  </style>
+  
+  <!-- Symbol: Graph line -->
+  <polyline class="track-line" points="10,50 30,30 50,40 70,20 90,30" />
+  <circle class="circle" cx="10" cy="50" r="3"/>
+  <circle class="circle" cx="30" cy="30" r="3"/>
+  <circle class="circle" cx="50" cy="40" r="3"/>
+  <circle class="circle" cx="70" cy="20" r="3"/>
+  <circle class="circle" cx="90" cy="30" r="3"/>
+
+  <!-- Firmenname -->
+  <text x="100" y="40" class="text">Fittrack</text>
+</svg>

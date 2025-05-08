@@ -1,0 +1,189 @@
+$bg-primary: #1e1e1e;
+$bg-secondary: #262626;
+$bg-tertiary: #2a2a2a;
+$text-primary: #ffffff;
+$text-secondary: #b3b3b3;
+$accent-primary: #4caf50;
+$accent-hover: #5cd761;
+$danger: #e53935;
+$danger-hover: #f44336;
+$border-radius: 12px;
+$input-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+$transition: all 0.3s ease;
+
+.set-list {
+  margin: 20px 0;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: $box-shadow;
+  max-width: 100%; 
+}
+
+.sets-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: $bg-secondary;
+  color: $text-primary;
+  overflow: hidden;
+  table-layout: fixed; 
+
+  thead {
+    background-color: $bg-tertiary;
+    
+    th {
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 500;
+      color: $text-secondary;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      
+      &:first-child {
+        border-top-left-radius: $border-radius;
+        width: 60px; // Fixed width for set number
+      }
+      
+      &:last-child {
+        border-top-right-radius: $border-radius;
+        text-align: center;
+        width: 100px; // Fixed width for actions
+      }
+    }
+  }
+  
+  tbody {
+    tr {
+      transition: $transition;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      &:hover {
+        background-color: rgba(76, 175, 80, 0.05);
+      }
+      
+      td {
+        padding: 12px 16px;
+        font-size: 15px;
+        
+        &.set-number {
+          font-weight: 600;
+          color: $accent-primary;
+          width: 60px;
+        }
+        
+        &.notes-cell {
+          max-width: none;
+          white-space: normal;
+        }
+        
+        &.actions-cell {
+          width: 100px;
+          text-align: center;
+          white-space: nowrap;
+        }
+        
+        input.form-control-sm {
+          width: 100%;
+          max-width: 120px;
+          padding: 8px 12px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background-color: $bg-tertiary;
+          color: $text-primary;
+          border-radius: $input-radius;
+          transition: $transition;
+          
+          &:focus {
+            outline: none;
+            border-color: $accent-primary;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+          }
+          
+          &::-webkit-inner-spin-button,
+          &::-webkit-outer-spin-button {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: $text-secondary;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: $transition;
+  
+  i.material-icons {
+    font-size: 18px;
+  }
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: $text-primary;
+    transform: translateY(-2px);
+  }
+  
+  &.danger {
+    background-color: rgba(229, 57, 53, 0.15);
+    color: $danger;
+    
+    &:hover {
+      background-color: rgba(229, 57, 53, 0.3);
+      color: $danger-hover;
+    }
+  }
+  
+  &.success {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: $accent-primary;
+    
+    &:hover {
+      background-color: rgba(76, 175, 80, 0.3);
+      color: $accent-hover;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sets-table {
+    thead th, 
+    tbody td {
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    
+    .notes-cell {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .sets-table {
+    thead th:nth-child(4),
+    tbody td:nth-child(4) {
+      display: none;
+    }
+  }
+}
+
+.exercise-edit {
+  .form-control {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}

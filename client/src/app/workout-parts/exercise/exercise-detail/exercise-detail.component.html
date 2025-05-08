@@ -1,0 +1,222 @@
+<div class="exercise-detail-container">
+  <div class="header">
+    <a routerLink="/workouts/{{workoutId}}" class="back-link">
+      <i class="material-icons">arrow_back</i>
+      <span>Back</span>
+    </a>
+    <h2>{{ exercise?.name }}</h2>
+    <div class="more-options"></div>
+  </div>
+  <div class="sets-by-date">
+    @for (dateGroup of setsByDate; track dateGroup.date) {
+      <div class="date-header" (click)="toggleDateExpanded(dateGroup.date)">
+        <div class="date-label" [class.open]="isDateExpanded(dateGroup.date)">
+          <div class="date-text">
+            @if (isToday(dateGroup.date)) {
+              <span>TODAY</span>
+            } @else if (isYesterday(dateGroup.date)) {
+              <span>YESTERDAY</span>
+            } @else {
+              <span>{{ formatDateHeader(dateGroup.date) }}</span>
+            }
+          </div>
+          <span class="arrow material-icons">chevron_right</span>
+        </div>
+      </div>
+      @if (isDateExpanded(dateGroup.date)) {
+        <div class="date-sets">
+          <div class="summary-card">
+            <div class="summary-header">
+              <div class="comparison-label">
+                <i class="material-icons">compare_arrows</i>
+                COMPARED TO PREVIOUS
+              </div>
+            </div>
+            <div class="metrics-grid">
+              <div class="metric">
+                <div class="metric-bar sets-bar"></div>
+                <div class="metric-name">Sets</div>
+                <div class="metric-value">{{ getMetricsForDate(dateGroup.date).sets.value }}</div>
+                <div class="metric-change" [class.positive]="getMetricsForDate(dateGroup.date).sets.change > 0"
+                  [class.negative]="getMetricsForDate(dateGroup.date).sets.change < 0">
+                  @if (getMetricsForDate(dateGroup.date).sets.change > 0) {
+                    <i class="material-icons">arrow_drop_up</i>
+                  }
+                  @if (getMetricsForDate(dateGroup.date).sets.change < 0) {
+                    <i class="material-icons">arrow_drop_down</i>
+                  }
+                  {{ getMetricsForDate(dateGroup.date).sets.change }} ({{ getMetricsForDate(dateGroup.date).sets.percentage }}%)
+                </div>
+              </div>
+              <div class="metric">
+                <div class="metric-bar reps-bar"></div>
+                <div class="metric-name">Repetitions</div>
+                <div class="metric-value">{{ getMetricsForDate(dateGroup.date).repetitions.value }}</div>
+                <div class="metric-change" [class.positive]="getMetricsForDate(dateGroup.date).repetitions.change > 0"
+                  [class.negative]="getMetricsForDate(dateGroup.date).repetitions.change < 0">
+                  @if (getMetricsForDate(dateGroup.date).repetitions.change > 0) {
+                    <i class="material-icons">arrow_drop_up</i>
+                  }
+                  @if (getMetricsForDate(dateGroup.date).repetitions.change < 0) {
+                    <i class="material-icons">arrow_drop_down</i>
+                  }
+                  {{ getMetricsForDate(dateGroup.date).repetitions.change }} ({{ getMetricsForDate(dateGroup.date).repetitions.percentage }}%)
+                </div>
+              </div>
+              <div class="metric">
+                <div class="metric-bar volume-bar"></div>
+                <div class="metric-name">Volume (kg)</div>
+                <div class="metric-value">{{ getMetricsForDate(dateGroup.date).volume.value }}</div>
+                <div class="metric-change" [class.positive]="getMetricsForDate(dateGroup.date).volume.change > 0"
+                  [class.negative]="getMetricsForDate(dateGroup.date).volume.change < 0">
+                  @if (getMetricsForDate(dateGroup.date).volume.change > 0) {
+                    <i class="material-icons">arrow_drop_up</i>
+                  }
+                  @if (getMetricsForDate(dateGroup.date).volume.change < 0) {
+                    <i class="material-icons">arrow_drop_down</i>
+                  }
+                  {{ getMetricsForDate(dateGroup.date).volume.change }} ({{ getMetricsForDate(dateGroup.date).volume.percentage }}%)
+                </div>
+              </div>
+              <div class="metric">
+                <div class="metric-bar intensity-bar"></div>
+                <div class="metric-name">kg/rep</div>
+                <div class="metric-value">{{ getMetricsForDate(dateGroup.date).intensity.value }}</div>
+                <div class="metric-change" [class.positive]="getMetricsForDate(dateGroup.date).intensity.change > 0"
+                  [class.negative]="getMetricsForDate(dateGroup.date).intensity.change < 0">
+                  @if (getMetricsForDate(dateGroup.date).intensity.change > 0) {
+                    <i class="material-icons">arrow_drop_up</i>
+                  }
+                  @if (getMetricsForDate(dateGroup.date).intensity.change < 0) {
+                    <i class="material-icons">arrow_drop_down</i>
+                  }
+                  {{ getMetricsForDate(dateGroup.date).intensity.change }} ({{ getMetricsForDate(dateGroup.date).intensity.percentage }}%)
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sets-list">
+            @for (set of dateGroup.sets; track set.id) {
+              <div class="set-item" (click)="openSetDetails(set)">
+                <div class="set-time">{{ formatTime(set.createdAt) }}</div>
+                <div class="set-reps">
+                  <span class="reps-value">{{ set.repetitions }}</span>
+                  <span class="reps-label">rep</span>
+                </div>
+                <div class="set-weight">
+                  <span class="weight-value">{{ set.weight }}</span>
+                  <span class="weight-unit">kg</span>
+                </div>
+                <div class="set-arrow">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+  <button class="btn-add-set" (click)="showAddSetForm()">
+    <i class="material-icons">add</i>
+  </button>
+  <div class="tab-navigation">
+    <a class="tab-item active">
+      <i class="material-icons">fitness_center</i>
+      <span>Sets</span>
+    </a>
+  </div>
+  @if (showSetForm) {
+    <div class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add Set for {{ exercise?.name }}</h3>
+          <button class="btn-close" (click)="hideAddSetForm()">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+        <form (ngSubmit)="addSet()" #setForm="ngForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="weight">Weight (kg)</label>
+              <div class="input-with-inner-buttons">
+                <button type="button" class="btn-minus" (click)="decreaseWeight()">
+                  <i class="material-icons">remove</i>
+                </button>
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  [ngModel]="displayWeight"
+                  (ngModelChange)="handleWeightInput($event)"
+                  (focus)="handleWeightFocus()"
+                  (blur)="handleWeightBlur()"
+                  [class.flash]="inputFlashedWeight"
+                  [ngClass]="{'edited': weightEdited}"
+                  class="form-control number"
+                  min="0"
+                  step="0.5"
+                  required
+                >
+                <button type="button" class="btn-plus" (click)="increaseWeight()">
+                  <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reps">Reps</label>
+              <div class="input-with-inner-buttons">
+                <button type="button" class="btn-minus" (click)="decreaseReps()">
+                  <i class="material-icons">remove</i>
+                </button>
+                <input
+                  type="number"
+                  id="reps"
+                  name="reps"
+                  [ngModel]="displayReps"
+                  (ngModelChange)="handleRepsInput($event)"
+                  (focus)="handleRepsFocus()"
+                  (blur)="handleRepsBlur()"
+                  [class.flash]="inputFlashedRepetitions"
+                  [ngClass]="{'edited': repsEdited}"
+                  class="form-control number"
+                  min="0"
+                  step="1"
+                  required
+                >
+                <button type="button" class="btn-plus" (click)="increaseReps()">
+                  <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes">Notes</label>
+            <input
+              type="text"
+              id="notes"
+              name="notes"
+              [(ngModel)]="newSet.notes"
+              class="form-control"
+              placeholder="e.g., Drop set, RPE 8, etc."
+            >
+          </div>
+          <div class="form-actions">
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="setForm.invalid || isSubmitting"
+            >
+              @if (isSubmitting) {
+                <span class="material-icons">refresh</span>
+                Adding...
+              } @else {
+                Add Set
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,113 @@
+<div class="home-container">
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to</h1>
+      <img
+        src="assets/logo.svg"
+        alt="FitTrack Logo"
+        class="fittrack-logo"
+      >
+      <p>Track your workouts, analyze your progress, and reach your fitness goals</p>
+      <div class="action-buttons">
+        <a [routerLink]="['/workouts/new']" class="btn btn-primary">Create Workout</a>
+        <a [routerLink]="['/workouts']" class="btn btn-secondary">Browse Workouts</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="section-header">
+      <h2>Your Dashboard</h2>
+    </div>
+
+    <div class="dashboard-content">
+      @if (upcomingWorkoutSuggestion) {
+        <div class="dashboard-card workout-suggestion">
+          <div class="card-header">
+            <h3>Suggested Workout</h3>
+            <span class="material-icons">fitness_center</span>
+          </div>
+          <div class="card-body">
+            <div class="workout-info">
+              <h4>{{ upcomingWorkoutSuggestion.name }}</h4>
+              <p class="last-trained">Last trained: {{ getDaysSinceLastTraining(upcomingWorkoutSuggestion.lastWorkoutAt) }}</p>
+            </div>
+            <a [routerLink]="['/workouts', upcomingWorkoutSuggestion.id]" class="btn btn-start">
+              Start Workout
+              <span class="material-icons">play_arrow</span>
+            </a>
+          </div>
+        </div>
+      }
+
+      <div class="dashboard-card quick-stats">
+        <div class="card-header">
+          <h3>Quick Stats</h3>
+          <span class="material-icons">insights</span>
+        </div>
+        <div class="card-body">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value">{{ recentWorkouts.length }}</span>
+              <span class="stat-label">Recent Workouts</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ recentWorkouts.length > 0 ? getDaysSinceLastTraining(recentWorkouts[0].lastWorkoutAt) : 'N/A' }}</span>
+              <span class="stat-label">Last Session</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-workouts">
+      <div class="section-header">
+        <h2>Recent Workouts</h2>
+        <a [routerLink]="['/workouts']" class="see-all">
+          See all
+          <span class="material-icons">chevron_right</span>
+        </a>
+      </div>
+
+      @if (!isLoading && recentWorkouts.length > 0) {
+        <div class="workouts-grid">
+          @for (workout of recentWorkouts; track workout.id) {
+            <div class="workout-card">
+              <div class="workout-card-content">
+                <h3>{{ workout.name }}</h3>
+                <p class="last-trained">Last trained: {{ getDaysSinceLastTraining(workout.lastWorkoutAt) }}</p>
+                <div class="workout-actions">
+                  <a [routerLink]="['/workouts', workout.id]" class="btn btn-sm">View Details</a>
+                  <button (click)="startWorkout(workout.id)" class="btn btn-sm btn-primary">
+                    Start
+                    <span class="material-icons">play_arrow</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else if (!isLoading && recentWorkouts.length === 0) {
+        <div class="empty-state">
+          <span class="material-icons empty-icon">fitness_center</span>
+          <p>No recent workouts found. Let's create your first workout!</p>
+          <a [routerLink]="['/workouts/new']" class="btn btn-primary">Create Workout</a>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-indicator">
+      <span class="material-icons loading-icon">refresh</span>
+      <span>Loading...</span>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-message">
+      <span class="material-icons error-icon">error</span>
+      {{ error }}
+    </div>
+  }
+</div>

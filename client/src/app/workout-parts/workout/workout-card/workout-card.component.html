@@ -1,0 +1,35 @@
+<div class="workout-card">
+  <div class="card-header">
+    <span class="workout-date">{{ getDaysSinceLastTraining(workout.lastWorkoutAt) }}</span>
+    <button class="delete-btn" [disabled]="isDeleting" [class.deleting]="isDeleting" (click)="deleteWorkout()">
+      <span class="material-icons" [class.spinning]="isDeleting">
+        {{ isDeleting ? 'refresh' : 'delete' }}
+      </span>
+    </button>
+  </div>
+  
+  <a [routerLink]="['/workouts', workout.id]" class="view-btn">
+  <div class="workout-content">
+    <div class="workout-info">
+      <h2 class="workout-name">{{ workout.name }}</h2>
+      <div class="workout-meta">
+        <div class="meta-item">
+          <span class="material-icons">fitness_center</span>
+          <span>{{ workout.exercises?.length || 0 }}</span>
+        </div>
+        @if (workout.duration) {
+        <div class="meta-item">
+          <span class="material-icons">timer</span>
+          <span>{{ workout.duration }} min</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</a>
+
+  
+  @if (workout.notes) {
+  <p class="workout-notes">{{ workout.notes }}</p>
+  }
+</div>

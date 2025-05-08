@@ -1,0 +1,19 @@
+services:
+  caddy:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: fittrack-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    container_name: fittrack-server

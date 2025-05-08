@@ -1,0 +1,130 @@
+$bg-primary: #1e1e1e;
+$bg-secondary: #262626;
+$bg-tertiary: #2a2a2a;
+$text-primary: #ffffff;
+$text-secondary: #b3b3b3;
+$accent-primary: #4caf50;
+$accent-hover: #5cd761;
+$danger: #e53935;
+$border-radius: 12px;
+$input-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+$transition: all 0.3s ease;
+
+.set-form {
+  background-color: $bg-secondary;
+  border-radius: $border-radius;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: $box-shadow;
+  border-left: 3px solid $accent-primary;
+
+  h6 {
+    font-size: 16px;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-group {
+      flex: 1;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: $text-secondary;
+      font-weight: 500;
+    }
+
+    .form-control {
+      padding: 12px 14px;
+      background-color: $bg-tertiary;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: $input-radius;
+      color: $text-primary;
+      font-size: 15px;
+      transition: $transition;
+
+      &:focus {
+        outline: none;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+      }
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        opacity: 1;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    .btn-primary {
+      padding: 12px 20px;
+      background-color: $accent-primary;
+      color: $text-primary;
+      border: none;
+      border-radius: $border-radius;
+      font-weight: 500;
+      cursor: pointer;
+      transition: $transition;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &:hover {
+        background-color: $accent-hover;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        background-color: rgba(76, 175, 80, 0.5);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .material-icons {
+        font-size: 18px;
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

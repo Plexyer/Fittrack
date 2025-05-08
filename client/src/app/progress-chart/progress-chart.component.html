@@ -1,0 +1,29 @@
+<div class="chart-container">
+    <div class="chart-toolbar">
+      <div class="chart-type-selector-wrapper" [class.open]="isOpen">
+        <span class="arrow material-icons">chevron_right</span>
+        <select
+          (focus)="isOpen = true"
+          (blur)="isOpen = false"
+          (change)="onDropdownChange($event)"
+          #chartDropdown
+          class="chart-type-selector">
+          <option value="workout-frequency">Workout Frequency</option>
+        </select>
+      </div>
+      <div class="time-range-selector">
+        <button [class.active]="timeRange === 4" (click)="changeTimeRange(4)">1M</button>
+        <button [class.active]="timeRange === 8" (click)="changeTimeRange(8)">2M</button>
+        <button [class.active]="timeRange === 12" (click)="changeTimeRange(12)">3M</button>
+      </div>
+    </div>
+    <canvas #chartCanvas></canvas>
+    <div *ngIf="isLoading" class="chart-loading">
+      <span class="material-icons spinning">sync</span>
+      <p>Loading chart data...</p>
+    </div>
+    <div *ngIf="!isLoading && noDataAvailable" class="chart-no-data">
+      <span class="material-icons">insert_chart</span>
+      <p>Not enough data available to display chart</p>
+    </div>
+  </div>

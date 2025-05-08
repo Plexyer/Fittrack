@@ -1,0 +1,82 @@
+<div class="workout-list">
+  <div class="page-header">
+    <h1 class="page-title">Workouts</h1>
+  </div>
+
+  @if (showForm) {
+    <app-workout-form
+      (workoutCreated)="handleWorkoutCreated($event)"
+      (cancelled)="toggleForm()">
+    </app-workout-form>
+  }
+
+  <div class="search-container">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Search workouts..."
+        class="search-input"
+      >
+      @if (searchTerm) {
+        <button
+          class="clear-btn"
+          (click)="searchTerm = ''">
+          <span class="material-icons">close</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="workouts-container">
+    @if (isLoading) {
+      <div class="loading-state">
+        <span class="material-icons spinning">refresh</span>
+        <p>Loading workouts...</p>
+      </div>
+    }
+
+    @if (!isLoading) {
+      <ng-container>
+        @if (workouts.length === 0){
+          <div class="empty-state">
+            <span class="material-icons">fitness_center</span>
+            <p>No workouts yet. Start tracking your progress!</p>
+            <button class="btn-primary" (click)="toggleForm()">Add Workout</button>
+          </div>
+        }
+
+        @if (workouts.length > 0 && filteredWorkouts.length === 0) {
+          <div class="empty-state">
+            <span class="material-icons">search_off</span>
+            <p>No workouts match your search.</p>
+            <button class="btn-text" (click)="searchTerm = ''">Clear Search</button>
+          </div>
+        }
+
+        <app-workout-card
+          *ngFor="let workout of filteredWorkouts"
+          [workout]="workout"
+          (deleted)="handleWorkoutDeleted($event)">
+        </app-workout-card>
+      </ng-container>
+    }
+  </div>
+
+  <div class="add-workout-container">
+    <button class="btn-add-workout" (click)="toggleCreateWorkout()">
+    <span class="material-icons" [ngClass]="{ 'rotated': showForm || openCreateWorkout }">
+      add
+    </span>
+    </button>
+
+    <div class="create-workout" [ngClass]="{'open': openCreateWorkout}" (click)="$event.stopPropagation()">
+      <button class="create-template" (click)="createTemplateWorkouts()">
+        Create Template Workouts
+      </button>
+      <button class="create-custom" (click)="toggleForm()">
+        Create custom workout
+      </button>
+    </div>
+  </div>
+</div>
